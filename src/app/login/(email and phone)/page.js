@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import LoginWithEmail from "@/components/loginwithEmail";
 
 export default function Login() {
   const router = useRouter()
@@ -13,7 +14,7 @@ export default function Login() {
 
   return (
     <div className="text-center">
-      
+      <
     </div>
   );
 }
