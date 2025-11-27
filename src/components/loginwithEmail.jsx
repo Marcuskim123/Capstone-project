@@ -41,7 +41,7 @@ export default function LoginWithEmail() {
 
   const sendLogin = () => {
     try {
-      console.log(email);
+      
     } catch (err) {
       setError(err);
       console.log(`Could not authenticate the login ${error}`);

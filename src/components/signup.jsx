@@ -29,8 +29,7 @@ export default function Signup() {
     const sendSignUp = async (e) => {
         e.preventDefault();
         const handleForm = new FormData(e.target);
-        setEmail(handleForm.get('email'));
-        setPassword(handleForm.get('password'));
+        setUserInfo.password(handleForm.get('password'));
 
         try {
             console.log(Tos);
