@@ -16,36 +16,43 @@ export default function GamingProfilesPage() {
 
   const [profile, setProfile] = useState([
     {
-      id:1,
+      id: 1,
       title: "profile #1",
       date: "2025-11-27",
-      desciption: "My first profile here:"
+      description: "My first profile here:"
     },
     {
-      id:2,
+      id: 2,
       title: "profile #2",
       date: "2025-11-27",
-      desciption: "My first profile here:"
+      description: "My first profile here:"
     },
     {
-      id:3,
+      id: 3,
       title: "profile #3",
       date: "2025-11-27",
-      desciption: "My first profile here:"
+      description: "My first profile here:"
     },
   ]);
+
+  const getData = (e) => {
+
+  }
 
   return (
     <div className="flex">
       <SidebarProvider>
-        <DashboardSidebar></DashboardSidebar>
-        <main>
+        <div>
+          <DashboardSidebar></DashboardSidebar>
+        </div>
+        <main className="w-full flex flex-col">
+          <SidebarTrigger>Open</SidebarTrigger>
           {profile.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <SidebarTrigger>Open</SidebarTrigger>
+            <div className="grid grid-cols-4 md:grid-cols-2 gap-10 w-full h-full">
               {profile.map((profiles) => (
-                <Profilecard key={profiles.id} profile={profiles}/>
-              ))};
+                <Profilecard key={profiles.id} profile={profiles} />
+              ))}
+              <p>adadadadad</p>
             </div>
           ) : (
             <div>
