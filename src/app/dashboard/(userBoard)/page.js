@@ -13,18 +13,25 @@ import Profilecard from "@/components/profilecard";
 
 
 export default function GamingProfilesPage() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [profileNumb, setProfileNumb] = useState(1);
+
   const [profile, setProfile] = useState([
     {
-      title:"profile #1",
-      date:"2025-11-27",
-      desciption:"My first profile here:"
+      id:1,
+      title: "profile #1",
+      date: "2025-11-27",
+      desciption: "My first profile here:"
     },
     {
-      title:"profile #2",
-      date:"2025-11-27",
-      desciption:"My first profile here:"
+      id:2,
+      title: "profile #2",
+      date: "2025-11-27",
+      desciption: "My first profile here:"
+    },
+    {
+      id:3,
+      title: "profile #3",
+      date: "2025-11-27",
+      desciption: "My first profile here:"
     },
   ]);
 
@@ -33,11 +40,17 @@ export default function GamingProfilesPage() {
       <SidebarProvider>
         <DashboardSidebar></DashboardSidebar>
         <main>
-          {profileNumb => (
-            <SidebarTrigger>Open</SidebarTrigger>
-            {profile.map((profiles) => (
-              <Profilecard key={profile.title}/>
-            ))};
+          {profile.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <SidebarTrigger>Open</SidebarTrigger>
+              {profile.map((profiles) => (
+                <Profilecard key={profiles.id} profile={profiles}/>
+              ))};
+            </div>
+          ) : (
+            <div>
+              {/* Insert no profile, start new */}
+            </div>
           )}
         </main>
       </SidebarProvider>
