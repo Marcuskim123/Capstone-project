@@ -10,12 +10,13 @@ export default function Profilecard({profile}) {
   const [infoProfile, setInfoProfile] = useState(profile); 
 
   return (
-    <div className="w-full max-w-full">
+    <div className="w-full max-w-full max-h-full">
       <Card>
         <CardHeader>
           <CardTitle>{infoProfile.title}</CardTitle>
         </CardHeader>
         <CardContent>
+
           <CardDescription>{infoProfile.description}</CardDescription>
         </CardContent>
       </Card>

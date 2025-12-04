@@ -10,8 +10,7 @@ import {
 } from "@/components/DashboardSidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import Profilecard from "@/components/profilecard";
-
-
+import EmptyProfile from "@/components/empty";
 export default function GamingProfilesPage() {
 
   const [profile, setProfile] = useState([
@@ -36,7 +35,7 @@ export default function GamingProfilesPage() {
   ]);
 
   const getData = (e) => {
-
+    
   }
 
   return (
@@ -48,15 +47,15 @@ export default function GamingProfilesPage() {
         <main className="w-full flex flex-col">
           <SidebarTrigger>Open</SidebarTrigger>
           {profile.length > 0 ? (
-            <div className="grid grid-cols-4 md:grid-cols-2 gap-10 w-full h-full">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 w-full h-full">
               {profile.map((profiles) => (
                 <Profilecard key={profiles.id} profile={profiles} />
               ))}
-              <p>adadadadad</p>
+
             </div>
           ) : (
             <div>
-              {/* Insert no profile, start new */}
+              <EmptyProfile/>
             </div>
           )}
         </main>
