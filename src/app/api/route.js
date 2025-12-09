@@ -1,23 +1,3 @@
-"use server"
-
-
-export async function GET() {
-    return Response.json({message:"Hello World"})
-}
-
-// export async function POST(req) {
-//     const {message} = await req.json()
-//     const result = await 
-    
-// }
-
-// const connect = await fetch("https://osu.ppy.sh/api/v2/",{
-//     method:"POST",
-//     headers:"",
-//     body:"",
-// });
-
-
 const myHeaders = new Headers();
 myHeaders.append("Accept", "application/json");
 myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
@@ -35,9 +15,32 @@ const requestOptions = {
   redirect: "follow"
 };
 
+export async function GET() {
+
+ try { 
+  // return connect =  await fetch("https://osu.ppy.sh/oauth/token", requestOptions)
+  // .then((response) => response.text())
+  // .then((result) => console.log(result))
+  // .catch((error) => console.error(error));
+  return Response.json({message:"Hello World"});
+ }
+ catch(err) {
+  console.log(err);
+ }
+}
+
+// export async function POST(req) {
+//     const {message} = await req.json()
+//     const result = await 
+    
+// }
+
+// const connect = await fetch("https://osu.ppy.sh/api/v2/",{
+//     method:"POST",
+//     headers:"",
+//     body:"",
+// });
+
 export async function connection() {
-    return connect = fetch("https://osu.ppy.sh/oauth/token", requestOptions)
-  .then((response) => response.text())
-  .then((result) => console.log(result))
-  .catch((error) => console.error(error));
+
 }

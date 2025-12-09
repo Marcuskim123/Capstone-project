@@ -6,9 +6,15 @@ import { useRouter } from "next/navigation";
 export default function Home() {
   const router = useRouter()
 
-  function routeToLogin()
+ async function routeToLogin()
   {
-    router.push('login');
+    try{
+    const response = await fetch('@/app/app/api',{method:"GET",});
+    const data = await response.json();
+    }
+    catch(err){
+      console.log(err);
+    }
   }
 
   return (
