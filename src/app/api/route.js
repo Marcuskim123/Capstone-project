@@ -11,19 +11,15 @@
 // urlencoded.append("grant_type", "client_credentials");
 // urlencoded.append("scope", "public");
 
-const requestOptions = {
-  method: "POST",
-  headers: myHeaders,
-  body: urlencoded,
-  redirect: "follow"
-};
+// const requestOptions = {
+//   method: "POST",
+//   headers: myHeaders,
+//   body: urlencoded,
+//   redirect: "follow"
+// };
 
 export async function GET() {
   try {
-    // return connect =  await fetch("https://osu.ppy.sh/oauth/token", requestOptions)
-    // .then((response) => response.text())
-    // .then((result) => console.log(result))
-    // .catch((error) => console.error(error));
     return Response.json({ message: "Hello World" });
   }
   catch (err) {
@@ -31,7 +27,10 @@ export async function GET() {
   }
 }
 
-export async function newOsuAuth() {
+
+
+// TODO fix requesting Oauth into account
+export async function newOsuAuth(req) {
   const params = {
     "client_id": process.env.API_OSU_CLIENT_ID,
     "redirect_uri": "http://localhost:3000",
@@ -65,3 +64,4 @@ export async function getNewTokenOsu(params) {
 
   });
 }
+

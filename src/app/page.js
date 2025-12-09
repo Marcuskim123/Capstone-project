@@ -5,21 +5,12 @@ import { useRouter } from "next/navigation";
 
 export default function Home() {
   const router = useRouter();
-    const params = {
-    "client_id": process.env.API_OSU_CLIENT_ID,
-    "redirect_uri": "http://localhost:3000",
-    "response_type": "code",
-    "scope": "public identify",
-    "state": "randomval",
-  }
-  const query = new URLSearchParams(params).toString();
-
  async function routeToLogin()
   {
     try{
-    const response = await fetch('/api',{method:"GET",});
+    const response = await fetch('http://localhost:3000/api',{method:"GET"});
     const data = await response.json();
-    console.log(data);
+    console.log(JSON.stringify(data));
     }
     catch(err){
       console.log(err);
