@@ -8,24 +8,13 @@ export async function POST(request) {
         const formData = await request.formData();
         const email = formData.get('email');
         const password = formData.get('password');
-        const signedUser = null;
+        let signedUser = null;
 
-        signInWithEmailAndPassword( auth,email,password)
-        .then((userCredential) => {
-            const user = userCredential.user;
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-        })
-
-        if(signedUser== null) {
-            return new Response.json("Error")
-        }
-
+        const userCredential = await signInWithEmailAndPassword( auth,email,password)
+        signedUser = userCredential.user;
         return Response.json({
-            message:`You have been login to ${user}`,
-            user: signedUser
+            message:`You have been login to ${signedUser}`,
+            user:signedUser
         })
 
     }

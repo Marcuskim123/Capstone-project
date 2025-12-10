@@ -41,11 +41,6 @@ export default function LoginWithEmail() {
   const sendLogin = async (e) => {
     try {
       e.preventDefault();
-      // const bodytoSend = new URLSearchParams({
-      //   userEmail: email,
-      //   password: password,
-      // });
-      console.log(JSON.stringify({userEmail: email,password: password}));
       const response = await fetch("api/login", {
         method: "POST",
         headers: {
