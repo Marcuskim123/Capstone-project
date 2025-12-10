@@ -8,7 +8,7 @@ export default function Home() {
  async function routeToLogin()
   {
     try{
-    const response = await fetch('http://localhost:3000/api',{method:"GET"});
+    const response = await fetch('/api',{method:"GET"});
     const data = await response.json();
     console.log(JSON.stringify(data));
     }

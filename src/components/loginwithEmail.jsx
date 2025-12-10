@@ -1,4 +1,3 @@
-"use client"
 import {
   Card,
   CardAction,
@@ -46,7 +45,8 @@ export default function LoginWithEmail() {
       //   userEmail: email,
       //   password: password,
       // });
-      const response = await fetch("http://localhost:3000/api/login", {
+      console.log(JSON.stringify({userEmail: email,password: password}));
+      const response = await fetch("api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
