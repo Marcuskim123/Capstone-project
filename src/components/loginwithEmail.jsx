@@ -35,6 +35,7 @@ export default function LoginWithEmail() {
   const [error, setError] = useState(null);
   const [confirmation, setConfimration] = useState(false);
   const [OTP, setOTP] = useState(false);
+  const [loginInfo, setLoginInfo] = useState({});
   // const [sumbitStatus, setSumbitStatus] = useState(false);
   const router = useRouter();
 
@@ -47,12 +48,19 @@ export default function LoginWithEmail() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userEmail: email,
-          password: password,
+          email: email,
+          password: password
         }),
       });
-      const login = await response.json();
-      console.log(login);
+      setLoginInfo(await response.json());
+      
+      if (loginInfo) {
+
+      }
+      else{
+
+      }
+
     } catch (err) {
       setError(err);
       console.log(`Could not authenticate the login ${error}`);

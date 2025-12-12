@@ -11,14 +11,16 @@ import {getFirestore} from "firebase/firestore"
 const firebaseConfig = {
   apiKey: process.env.API_FIREBASE_KEY,
   authDomain: process.env.FIREBASE_AUTHDOMAIN,
-  projectId: "capstone-e4b08",
-  storageBucket: "capstone-e4b08.firebasestorage.app",
-  messagingSenderId: "911745819222",
-  appId: "1:911745819222:web:a6054a9b2a2998a8a811f7",
-  measurementId: "G-9RMX6SLV6X"
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket:process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID
 };
 
 // Initialize Firebase
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+// const app = initializeApp(firebaseConfig);
+
 export const db = getFirestore(app);
 export const auth = getAuth(app);
