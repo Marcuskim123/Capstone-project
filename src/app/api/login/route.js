@@ -10,14 +10,21 @@ export async function POST(request) {
         // const req = await request.FormData();
         // const email = req.get("email");
         // const password = req.get("password");
-        const userCredential = await signInWithEmailAndPassword(auth,email,password)
+        const userCredential = await signInWithEmailAndPassword(auth,email,password);
         const signedUser = userCredential.user.uid;
-        console.log(userCredential);
+        const token = await userCredential.user.getIdToken();
+        const refToken = userCredential.user.refreshToken;
 
         return Response.json({
             message:`You have been login to ${signedUser}`,
             user:signedUser,
-        });
+            email:userCredential.user.email,
+            token:token,
+            refreshToken:refToken,
+        }, {status:200});
+
+        
+
     }
     catch(e){
         console.log("API ERROR " + e);

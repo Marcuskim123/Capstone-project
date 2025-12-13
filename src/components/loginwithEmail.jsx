@@ -55,7 +55,8 @@ export default function LoginWithEmail() {
       setLoginInfo(await response.json());
       
       if (loginInfo) {
-
+        console.log(loginInfo);
+        router.push("/dashboard");
       }
       else{
 
@@ -67,8 +68,7 @@ export default function LoginWithEmail() {
     }
   };
 
-  const getOTP = () => {};
-
+  
   const checkOTP = () => {
     console.log("OTP has been sumbitted " + OTP);
     try {
