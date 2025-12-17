@@ -1,48 +1,65 @@
-import { AuthCredential, signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/lib/firebase.config"
+import "server-only";
+import { createSessionCookie, signInWithEmailAndPassword } from "firebase/auth";
 import { cookies } from "next/headers";
-
-
+import {auth} from "@/lib/firebase/firebase.config"
+import { adminAuth } from '@/lib/firebase/admin';
+export const runtime = "nodejs";
 
 export async function POST(request) {
-    try {
-        const { email, password } = await request.json();
-        // const req = await request.FormData();
-        // const email = req.get("email");
-        // const password = req.get("password");
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        const signedUser = userCredential.user.uid;
-        const token = await userCredential.user.getIdToken();
-        const refToken = userCredential.user.refreshToken;  
+  try {
 
-        return new Response(
-            JSON.stringify({
-                message: `You have been login to ${signedUser}`,
-                user: signedUser,
-                email: userCredential.user.email,
+    
+    const { email, password } = await request.json();
+    // login process to firebase
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    const signedUser = userCredential.user.uid;
+    const token = await userCredential.user.getIdToken();
+    const refToken = userCredential.user.refreshToken
 
-            }),
-            {
-                status: 200,
-                headers: {
-                    "Content-Type":"application/json",
-                    "Set-Cookie":`IdToken=${token}`
-                }
+    
+    //bakes cookie for login
+    const bakeCookies = await cookies();
+    const expireDate = 60 * 60 * 24 * 5 * 1000;
+    const cookie2Bake =  await adminAuth.createSessionCookie(token, {expireDate})
+    const session = bakeCookies.set("session", cookie2Bake, {
+      httpOnly: true,
+      secure: true,
+    });
 
-            });
-
-
-
-    }
-    catch (e) {
-        console.log("API ERROR " + e);
-        return new Response("There is error at authenticating please try again", { status: 500 });
-    }
-
+    //send response
+    return new Response(
+      JSON.stringify({
+        message: `You have been login to ${signedUser} and cookie has been set`,
+        user: signedUser,
+        email: userCredential.user.email,
+      }),
+      {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  } catch (e) {
+    console.log("API ERROR " + e);
+    return new Response("There is error at authenticating please try again", {
+      status: 500,
+    });
+  }
 }
 
 export async function GET(req) {
-    return Response.json("GET called");
+  // var admin = require("firebase-admin");
+
+  // var serviceAccount = require("path/to/serviceAccountKey.json");
+
+  // admin.initializeApp({
+  //   credential: admin.credential.cert(serviceAccount),
+  // });
+
+  return Response.json("GET called");
 }
-
-
