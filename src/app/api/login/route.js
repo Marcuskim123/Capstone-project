@@ -19,18 +19,21 @@ export async function POST(request) {
     const signedUser = userCredential.user.uid;
     const token = await userCredential.user.getIdToken();
     const refToken = userCredential.user.refreshToken
-
+    
     
     //bakes cookie for login
-    const bakeCookies = cookies();
+    const bakeCookies = await cookies();
+
     const expiresIn = 60 * 60 * 24 * 5 * 1000;
-    const cookie2Bake =  await adminAuth.createSessionCookie(token, {expiresIn,})
+    const cookie2Bake =  await adminAuth.createSessionCookie(token, {expiresIn:expiresIn})
     const session = bakeCookies.set("session", cookie2Bake, {
       maxAge: expiresIn / 1000, // seconds (Next.js expects seconds)
       httpOnly: true,
       secure: true,
     });
 
+    const check = await adminAuth.verifySessionCookie(cookie2Bake);
+    console.log(check);
     //send response
     return new Response(
       JSON.stringify({
