@@ -1,10 +1,7 @@
 import "server-only";
-import { createSessionCookie, signInWithEmailAndPassword } from "firebase/auth";
-import { cookies } from "next/headers";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import {auth} from "@/lib/firebase/firebase.config"
-import { adminAuth } from '@/lib/firebase/admin';
-export const runtime = "nodejs";
-
+import {createSession} from '@/lib/session'
 export async function POST(request) {
   try {
 
@@ -16,29 +13,35 @@ export async function POST(request) {
       email,
       password
     );
-    const signedUser = userCredential.user.uid;
+    const signedUser = userCredential.user.displayName;
     const token = await userCredential.user.getIdToken();
-    const refToken = userCredential.user.refreshToken
-    
-    
-    //bakes cookie for login
-    const bakeCookies = await cookies();
+    // const refToken = userCredential.user.refreshToken
+    const userUid = userCredential.user.uid;
 
-    const expiresIn = 60 * 60 * 24 * 5 * 1000;
-    const cookie2Bake =  await adminAuth.createSessionCookie(token, {expiresIn:expiresIn})
-    const session = bakeCookies.set("session", cookie2Bake, {
-      maxAge: expiresIn / 1000, // seconds (Next.js expects seconds)
-      httpOnly: true,
-      secure: true,
-    });
+    
+    createSession(token);
+    // const bakeCookies = await cookies()
+    
+    // //bakes cookie for login
+    // const expiresIn = 60 * 60 * 24 * 5 * 1000;
+    // const sessionCookie =  await adminAuth.createSessionCookie(token, {expiresIn:expiresIn})
+    // bakeCookies.set("session", sessionCookie, {
+    //   maxAge: expiresIn / 1000, // seconds (Next.js expects seconds)
+    //   httpOnly: true,
+    //   secure: true,
+    // });
 
-    const check = await adminAuth.verifySessionCookie(cookie2Bake);
-    console.log(check);
+    // const check = await adminAuth.verifySessionCookie(sessionCookie);
+    // console.log(check);
+
+
+
     //send response
     return new Response(
       JSON.stringify({
         message: `You have been login to ${signedUser} and cookie has been set`,
         user: signedUser,
+        uid:userUid,
         email: userCredential.user.email,
       }),
       {
@@ -49,6 +52,8 @@ export async function POST(request) {
       }
     );
   } catch (e) {
+
+
     console.log("API ERROR " + e);
     return new Response("There is error at authenticating please try again", {
       status: 500,
@@ -56,14 +61,3 @@ export async function POST(request) {
   }
 }
 
-export async function GET(req) {
-  // var admin = require("firebase-admin");
-
-  // var serviceAccount = require("path/to/serviceAccountKey.json");
-
-  // admin.initializeApp({
-  //   credential: admin.credential.cert(serviceAccount),
-  // });
-
-  return Response.json("GET called");
-}

@@ -7,7 +7,6 @@ if (!privateKey) {
   throw new Error("FIREBASE_PRIVATE_KEY is missing");
 }
 
-console.log(privateKey);
 const serviceAccount = {
   projectId: process.env.FIREBASE_PROJECT_ID,
   clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
