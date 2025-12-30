@@ -1,11 +1,12 @@
 import "server-only";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import {auth} from "@/lib/firebase/firebase.config"
-import {createSession} from '@/lib/session'
+import { auth } from "@/lib/firebase/firebase.config"
+import { checkSessionCookie, createSession } from '@/lib/session'
+import { verify } from "crypto";
 export async function POST(request) {
   try {
 
-    
+
     const { email, password } = await request.json();
     // login process to firebase
     const userCredential = await signInWithEmailAndPassword(
@@ -18,10 +19,10 @@ export async function POST(request) {
     // const refToken = userCredential.user.refreshToken
     const userUid = userCredential.user.uid;
 
-    
+
     createSession(token);
     // const bakeCookies = await cookies()
-    
+
     // //bakes cookie for login
     // const expiresIn = 60 * 60 * 24 * 5 * 1000;
     // const sessionCookie =  await adminAuth.createSessionCookie(token, {expiresIn:expiresIn})
@@ -41,7 +42,7 @@ export async function POST(request) {
       JSON.stringify({
         message: `You have been login to ${signedUser} and cookie has been set`,
         user: signedUser,
-        uid:userUid,
+        uid: userUid,
         email: userCredential.user.email,
       }),
       {
@@ -61,3 +62,32 @@ export async function POST(request) {
   }
 }
 
+export async function GET() {
+
+  try {
+    const cookie = checkSessionCookie()
+
+    if (cookie == true) {
+      return new Response(
+        JSON.stringify({
+          message: "Session sucessfully verified",
+          user: "DummyNickname",
+          uid: "a1231231",
+          email: "@mail.com",
+          verified:true
+        }), {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+    }
+    else {
+      return new Response("There is error within cookie verification, please try again", { status: 500 })
+    }
+  }
+  catch (err) {
+    console.log("API ERROR /LOGIN GET", + err)
+    return new Response("There is error at authenticating your cookie", { status: 500 })
+  }
+}

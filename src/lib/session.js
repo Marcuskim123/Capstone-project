@@ -5,7 +5,7 @@ import { redirect, RedirectType } from "next/navigation";
 
 export const runtime = "nodejs";
 
-export default async function checkSession() {
+export async function checkSessionCookie() {
   try {
     // Whenever a user is accessing restricted content that requires authentication.
     const sessionCookie = (await cookies().get("session")) || "";
@@ -25,8 +25,8 @@ export default async function checkSession() {
     return true;
     
   } catch (e) {
-    console.log("SESSION ERROR: ", e);
-    redirect("/login", RedirectType.push);
+    console.log("SESSION ERROR/NOT FOUND: ", e);
+    return false;
   }
 }
 

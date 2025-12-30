@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Plus, Search, Gamepad2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -33,9 +33,26 @@ export default function GamingProfilesPage() {
       description: "My first profile here:"
     },
   ]);
+  useEffect( async () => {
+    const checkSession = await fetch("api/login", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    console.log(await checkSession.json());
+
+    if (checkSession) {
+      console.log("TRUE")
+    }
+    else{
+      console.log("ERROR")
+    }
+  }, []);
+
 
   const getData = (e) => {
-    
+
   }
 
   return (
@@ -55,7 +72,7 @@ export default function GamingProfilesPage() {
             </div>
           ) : (
             <div>
-              <EmptyProfile/>
+              <EmptyProfile />
             </div>
           )}
         </main>

@@ -54,12 +54,12 @@ export default function LoginWithEmail() {
       });
       setLoginInfo(await response.json());
       
-      if (loginInfo) {
+      if (loginInfo != null) {
         console.log(loginInfo);
         router.push("/dashboard");
       }
       else{
-
+        console.log("Error");
       }
 
     } catch (err) {
