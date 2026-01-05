@@ -28,39 +28,52 @@ import { Input } from "@/components/ui/input";
 import { useState, useContext } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import Popup from "./loginpopup";
 
 export default function LoginWithEmail() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [error, setError] = useState(null);
-  const [confirmation, setConfimration] = useState(true);
-  const [OTP, setOTP] = useState();
+  const [confirmation, setConfimration] = useState(false);
+  const [OTP, setOTP] = useState(false);
+  const [loginInfo, setLoginInfo] = useState({});
   // const [sumbitStatus, setSumbitStatus] = useState(false);
   const router = useRouter();
 
-  const sendLogin = () => {
+  const sendLogin = async (e) => {
     try {
+      e.preventDefault();
+      const response = await fetch("api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password
+        }),
+      });
+      setLoginInfo(await response.json());
       
+      if (loginInfo != null) {
+        console.log(loginInfo);
+        router.push("/dashboard");
+      }
+      else{
+        console.log("Error");
+      }
+
     } catch (err) {
       setError(err);
       console.log(`Could not authenticate the login ${error}`);
     }
   };
 
-  const getOTP = () => {
-
-  };
-
+  
   const checkOTP = () => {
     console.log("OTP has been sumbitted " + OTP);
     try {
-
-    }
-    catch (err) {
-    
-    }
-  }
+    } catch (err) {}
+  };
 
   return (
     <div className=" w-full flex justify-center">
@@ -74,11 +87,13 @@ export default function LoginWithEmail() {
             </CardDescription>
             <CardAction>
               {/* <Button onClick={} variant="outline">Sign up</Button> */}
-                <Link href={"/signup"} variant="outline">Sign up</Link>
+              <Link href={"/signup"} variant="outline">
+                Sign up
+              </Link>
             </CardAction>
           </CardHeader>
-          <CardContent>
-            <form action={sendLogin} className="flex w-full grid gap-3">
+          <form onSubmit={sendLogin} className="flex w-full grid gap-3">
+            <CardContent>
               <Label>Email</Label>
               <Input
                 id="email"
@@ -94,18 +109,18 @@ export default function LoginWithEmail() {
                 placeholder=""
                 onChange={(e) => setPassword(e.target.value)}
               />
-            </form>
-          </CardContent>
-          <CardFooter className="flex grid gap-5 w-full">
-            <DialogTrigger asChild>
-              <Button type="sumbit" className="">
-                Login
-              </Button>
-            </DialogTrigger>
-            <Link className="text-center max-w-lg" href={"/"}>
-              Login with..
-            </Link>
-          </CardFooter>
+            </CardContent>
+            <CardFooter className="flex grid gap-5 w-full">
+              <DialogTrigger asChild>
+                <Button type="sumbit" className="">
+                  Login
+                </Button>
+              </DialogTrigger>
+              <Link className="text-center max-w-lg" href={"/"}>
+                Login with..
+              </Link>
+            </CardFooter>
+          </form>
         </Card>
         {confirmation && (
           <div>
@@ -113,7 +128,10 @@ export default function LoginWithEmail() {
               <DialogContent>
                 <DialogHeader>
                   <DialogTitle>Enter your one-time password here</DialogTitle>
-                  <DialogDescription>the one-time code has been sent to your email. Please enter the code below.</DialogDescription>
+                  <DialogDescription>
+                    the one-time code has been sent to your email. Please enter
+                    the code below.
+                  </DialogDescription>
                 </DialogHeader>
                 <InputOTP maxLength={6}>
                   <InputOTPGroup onChange={(value) => setOTP(value)}>
@@ -127,7 +145,7 @@ export default function LoginWithEmail() {
                 </InputOTP>
                 <DialogFooter>
                   {/* <DialogClose asChild> */}
-                    <Button type="Sumbit">Confirm</Button>
+                  <Button type="Sumbit">Confirm</Button>
                   {/* </DialogClose> */}
                 </DialogFooter>
               </DialogContent>

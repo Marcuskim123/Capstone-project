@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Plus, Search, Gamepad2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,31 +11,53 @@ import {
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import Profilecard from "@/components/profilecard";
 import EmptyProfile from "@/components/empty";
+import { db } from "@/lib/firebase/firebase.config"
+import { doc, getDocs, query, where } from "firebase/firestore";
+
+
 export default function GamingProfilesPage() {
 
   const [profile, setProfile] = useState([
-    {
-      id: 1,
-      title: "profile #1",
-      date: "2025-11-27",
-      description: "My first profile here:"
-    },
-    {
-      id: 2,
-      title: "profile #2",
-      date: "2025-11-27",
-      description: "My first profile here:"
-    },
-    {
-      id: 3,
-      title: "profile #3",
-      date: "2025-11-27",
-      description: "My first profile here:"
-    },
+    // {
+    //   id: 1,
+    //   title: "profile #1",
+    //   date: "2025-11-27",
+    //   description: "My first profile here:"
+    // },
+    // {
+    //   id: 2,
+    //   title: "profile #2",
+    //   date: "2025-11-27",
+    //   description: "My first profile here:"
+    // },
+    // {
+    //   id: 3,
+    //   title: "profile #3",
+    //   date: "2025-11-27",
+    //   description: "My first profile here:"
+    // },
   ]);
+  useEffect( async () => {
+    const getCheckSession = await fetch("api/login", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    console.log(await getCheckSession.json());
 
-  const getData = (e) => {
-    
+    if (!getCheckSession.json()) {
+      console.log("TRUE")
+    }
+    else{
+      console.log("ERROR")
+    }
+  }, []);
+
+
+  const getData = async (e) => {
+    const quer = query(collection(db,"users"),where("uid",'==', uid))
+    const snap = await getDocs(quer);
   }
 
   return (
@@ -55,7 +77,7 @@ export default function GamingProfilesPage() {
             </div>
           ) : (
             <div>
-              <EmptyProfile/>
+              <EmptyProfile />
             </div>
           )}
         </main>
