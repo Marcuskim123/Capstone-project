@@ -11,38 +11,42 @@ import {
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import Profilecard from "@/components/profilecard";
 import EmptyProfile from "@/components/empty";
+import { db } from "@/lib/firebase/firebase.config"
+import { doc, getDocs, query, where } from "firebase/firestore";
+
+
 export default function GamingProfilesPage() {
 
   const [profile, setProfile] = useState([
-    {
-      id: 1,
-      title: "profile #1",
-      date: "2025-11-27",
-      description: "My first profile here:"
-    },
-    {
-      id: 2,
-      title: "profile #2",
-      date: "2025-11-27",
-      description: "My first profile here:"
-    },
-    {
-      id: 3,
-      title: "profile #3",
-      date: "2025-11-27",
-      description: "My first profile here:"
-    },
+    // {
+    //   id: 1,
+    //   title: "profile #1",
+    //   date: "2025-11-27",
+    //   description: "My first profile here:"
+    // },
+    // {
+    //   id: 2,
+    //   title: "profile #2",
+    //   date: "2025-11-27",
+    //   description: "My first profile here:"
+    // },
+    // {
+    //   id: 3,
+    //   title: "profile #3",
+    //   date: "2025-11-27",
+    //   description: "My first profile here:"
+    // },
   ]);
   useEffect( async () => {
-    const checkSession = await fetch("api/login", {
+    const getCheckSession = await fetch("api/login", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     })
-    console.log(await checkSession.json());
+    console.log(await getCheckSession.json());
 
-    if (checkSession) {
+    if (!getCheckSession.json()) {
       console.log("TRUE")
     }
     else{
@@ -51,8 +55,9 @@ export default function GamingProfilesPage() {
   }, []);
 
 
-  const getData = (e) => {
-
+  const getData = async (e) => {
+    const quer = query(collection(db,"users"),where("uid",'==', uid))
+    const snap = await getDocs(quer);
   }
 
   return (

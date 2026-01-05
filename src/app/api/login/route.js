@@ -21,22 +21,6 @@ export async function POST(request) {
 
 
     createSession(token);
-    // const bakeCookies = await cookies()
-
-    // //bakes cookie for login
-    // const expiresIn = 60 * 60 * 24 * 5 * 1000;
-    // const sessionCookie =  await adminAuth.createSessionCookie(token, {expiresIn:expiresIn})
-    // bakeCookies.set("session", sessionCookie, {
-    //   maxAge: expiresIn / 1000, // seconds (Next.js expects seconds)
-    //   httpOnly: true,
-    //   secure: true,
-    // });
-
-    // const check = await adminAuth.verifySessionCookie(sessionCookie);
-    // console.log(check);
-
-
-
     //send response
     return new Response(
       JSON.stringify({
@@ -67,14 +51,14 @@ export async function GET() {
   try {
     const cookie = checkSessionCookie()
 
-    if (cookie == true) {
+    if (!cookie) {
       return new Response(
         JSON.stringify({
           message: "Session sucessfully verified",
           user: "DummyNickname",
           uid: "a1231231",
           email: "@mail.com",
-          verified:true
+          authenticated:true
         }), {
         status: 200,
         headers: {
