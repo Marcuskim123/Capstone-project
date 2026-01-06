@@ -1,25 +1,26 @@
 import { cookies } from "next/headers";
 import "server-only";
 import { adminAuth } from "@/lib/firebase/admin";
-import { redirect, RedirectType } from "next/navigation";
 
 export const runtime = "nodejs";
 
 export async function checkSessionCookie() {
   try {
     // Whenever a user is accessing restricted content that requires authentication.
-    const sessionCookie = (await cookies().get("session")) || "";
+    const sessionCookie = await cookies().get("session")?.value || "";
+
     if (!sessionCookie) {
       return null;
     }
     // Verify the session cookie. In this case an additional check is added to detect
     // if the user's Firebase session was revoked, user deleted/disabled, etc.
     try {
-
-      const verifySession = adminAuth.verifySessionCookie(sessionCookie, true);
+      const verifySession = await adminAuth.verifySessionCookie(sessionCookie, true);
       const decodedClaims = await verifySession.decodedClaims
-      console.log(verifySession);
-      return await verifySession;
+      // console.log(verifySession);
+      // console.log(decodedClaims);
+      
+      return verifySession;
 
     } catch (err) {
 
@@ -43,8 +44,6 @@ export async function createSession(userToken) {
     httpOnly: true,
     secure: true,
   });
-
-  const check = await adminAuth.verifySessionCookie(sessionCookie);
-  console.log(check);
+  // console.log(check);
 
 }

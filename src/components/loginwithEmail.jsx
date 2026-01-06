@@ -28,6 +28,8 @@ import { Input } from "@/components/ui/input";
 import { useState, useContext } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { auth } from "@/lib/firebase/firebase.config";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default function LoginWithEmail() {
   const [password, setPassword] = useState("");
@@ -35,31 +37,36 @@ export default function LoginWithEmail() {
   const [error, setError] = useState(null);
   const [confirmation, setConfimration] = useState(false);
   const [OTP, setOTP] = useState(false);
-  const [loginInfo, setLoginInfo] = useState({});
-  // const [sumbitStatus, setSumbitStatus] = useState(false);
+  const [cookieInfo, setCookieInfo] = useState({});
   const router = useRouter();
 
   const sendLogin = async (e) => {
     try {
       e.preventDefault();
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const signedUser = /*userCredential.user.displayName*/ "a";
+      const token = await userCredential.user.getIdToken();
+      const userUid = userCredential.user.uid;
+
       const response = await fetch("api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: email,
-          password: password
+          displayName: signedUser,
+          uid: userUid,
+          IdToken: token,
         }),
       });
-      setLoginInfo(await response.json());
-      
-      if (loginInfo != null) {
-        console.log(loginInfo);
+      const mes = await response.json();
+      console.log(mes.message);
+      if (response.ok) {
         router.push("/dashboard");
-      }
-      else{
-        console.log("Error");
       }
 
     } catch (err) {
@@ -68,7 +75,6 @@ export default function LoginWithEmail() {
     }
   };
 
-  
   const checkOTP = () => {
     console.log("OTP has been sumbitted " + OTP);
     try {

@@ -2,20 +2,19 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { auth } from "@/lib/firebase/firebase.config";
-
+import {auth} from "@/lib/firebase/firebase.config"
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [userInfo, setUser] = useState(null);
+  const [fireBaseloading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.log("AUTHCONTEXT");
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       setUser(firebaseUser || null);
-      console.log("effect");
       setLoading(false);
-    });
+    }); 
 
     return () => unsubscribe();
   }, []);
@@ -25,10 +24,10 @@ export const AuthProvider = ({ children }) => {
   } 
  
   return (
-    <AuthContext.Provider value={{ user, loading, logOut}}>
+    <AuthContext.Provider value={{ userInfo, fireBaseloading, logOut}}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth = () => useContext(AuthContext);
+export const firebaseAuth = () => useContext(AuthContext);
