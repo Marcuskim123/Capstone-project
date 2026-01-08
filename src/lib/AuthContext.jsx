@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   const [fireBaseloading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log("AUTHCONTEXT");
+    console.log("Checking authorization");
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       setUser(firebaseUser || null);
       setLoading(false);

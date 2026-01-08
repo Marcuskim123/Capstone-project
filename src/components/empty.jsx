@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   Empty,
@@ -9,11 +9,31 @@ import {
   EmptyTitle,
 } from "./ui/empty";
 import { Button } from "./ui/button";
-import Router from "next/router";
 import { Label } from "./ui/label";
 
 export default function EmptyProfile() {
-    const router = Router;
+  const newGame = async () => {
+    try {
+
+      //required url for the 
+      const params = {
+        client_id: process.env.NEXT_PUBLIC_API_OSU_CLIENT_ID,
+        redirect_uri: "http://localhost:3000/api/newgame/osu",
+        response_type: "code",
+        scope: "public identify",
+        state: "randomval",
+      };
+
+      //embed params into url
+      const query = new URLSearchParams(params).toString();
+
+      // redirect user to osu OAuth page
+      window.location.href = `https://osu.ppy.sh/oauth/authorize?${query}`;
+      
+    } catch (e) {
+      console.log("There has been error trying to add the game")
+    }
+  };
 
   return (
     <Empty className="w-full justify-center">
@@ -26,7 +46,7 @@ export default function EmptyProfile() {
       </EmptyHeader>
       <EmptyContent>
         <div>
-          <Button>Create new profile</Button>
+          <Button onClick={newGame}>Create new profile</Button>
           <Label></Label>
         </div>
       </EmptyContent>

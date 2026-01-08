@@ -25,19 +25,22 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { useState, useContext } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { auth } from "@/lib/firebase/firebase.config";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { firebaseAuth } from "@/lib/AuthContext";
 
 export default function LoginWithEmail() {
+
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [error, setError] = useState(null);
   const [confirmation, setConfimration] = useState(false);
   const [OTP, setOTP] = useState(false);
   const [cookieInfo, setCookieInfo] = useState({});
+  const {user, fireBaseloading, logOut} = firebaseAuth();
   const router = useRouter();
 
   const sendLogin = async (e) => {
@@ -48,8 +51,8 @@ export default function LoginWithEmail() {
         email,
         password
       );
-      const signedUser = /*userCredential.user.displayName*/ "a";
       const token = await userCredential.user.getIdToken();
+      console.log(token);
       const userUid = userCredential.user.uid;
 
       const response = await fetch("api/login", {
@@ -58,7 +61,6 @@ export default function LoginWithEmail() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          displayName: signedUser,
           uid: userUid,
           IdToken: token,
         }),
@@ -80,6 +82,11 @@ export default function LoginWithEmail() {
     try {
     } catch (err) {}
   };
+
+  useEffect(() => {
+
+  },[]);
+
 
   return (
     <div className=" w-full flex justify-center">

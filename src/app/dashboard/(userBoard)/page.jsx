@@ -40,6 +40,7 @@ export default function Dashboard() {
 
   //preventing unauthorized access
   useEffect(() => {
+    console.log(userInfo)
     if (fireBaseloading) {
       return;
     }
@@ -58,7 +59,7 @@ export default function Dashboard() {
           const data = snap.data();
 
           setNumberId(data.uid);
-          console.log(username);
+          console.log();
         } else {
           console.log("aaaa");
         }
@@ -71,7 +72,7 @@ export default function Dashboard() {
   }, [userInfo, fireBaseloading, router]);
 
   const getProfiles = () => {
-    
+
     setProfile();
   };
 

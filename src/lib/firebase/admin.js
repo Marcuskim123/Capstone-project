@@ -1,5 +1,7 @@
 import 'server-only'
-import { initializeApp, getApps, cert } from "firebase-admin/app";
+// import { initializeApp, , cert } from "firebase-admin/app";
+const { initializeApp, getApps,applicationDefault, cert } = require('firebase-admin/app');
+const { getFirestore, Timestamp, FieldValue, Filter } = require('firebase-admin/firestore');
 import { getAuth } from "firebase-admin/auth";
 
 const privateKey = process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n");
@@ -20,4 +22,5 @@ const app =
       })
     : getApps()[0];
 
+export const db = getFirestore(app);
 export const adminAuth = getAuth(app);
