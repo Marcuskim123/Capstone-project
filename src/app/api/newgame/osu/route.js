@@ -1,8 +1,8 @@
-"use server"
-
+import "server-only"
 import { NextResponse } from "next/server";
 import { db } from "@/lib/firebase/admin";
 import { checkSessionCookie } from "@/lib/session";
+import { addOsuData } from "@/lib/addGame";
 // TODO 
 
 export async function GET(req) {
@@ -35,7 +35,7 @@ export async function GET(req) {
         Accept: "application/json",
       },
       body: JSON.stringify({
-        client_id: process.env.API_OSU_CLIENT_ID,
+        client_id: process.env.NEXT_PUBLIC_API_OSU_CLIENT_ID,
         client_secret: process.env.API_OSU_CLIENT_SECRET,
         code,
         grant_type: "authorization_code",
@@ -72,9 +72,18 @@ export async function GET(req) {
     console.log(osuUser);
     // TODO: save user + token in DB / session / JWT
 
-    const userId = await checkSessionCookie().uid;
-    const saveData = db.collection('users').doc(userId).collection('profile');
 
+    //check usersession in admin sdk
+    const user = await checkSessionCookie()
+
+    // if (!user) {
+    //   const response = NextResponse.next();
+    //   return NextResponse.redirect(
+    //     new URL("/dashboard",req.url)
+    //   );
+    // }
+    // const saveData = db.collection('users').doc(userId).collection('profile');
+    addOsuData(osuUser,user.uid);
     // Redirect back to frontend
     return NextResponse.redirect(
       new URL("/dashboard", req.url)

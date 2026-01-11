@@ -55,7 +55,7 @@ export default function LoginWithEmail() {
       console.log(token);
       const userUid = userCredential.user.uid;
 
-      const response = await fetch("api/login", {
+      const response = await fetch("api/session", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -7,9 +7,17 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import Profilecard from "@/components/profilecard";
 import EmptyProfile from "@/components/empty";
 import { db } from "@/lib/firebase/firebase.config";
-import { doc, getDoc, collection, getDocs } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  collection,
+  getDocs,
+  limit,
+  query,
+} from "firebase/firestore";
 import { firebaseAuth } from "@/lib/AuthContext";
 import { useRouter } from "next/navigation";
+import { AddGameProfileDialog } from "@/components/ai-gen/createnew";
 
 export default function Dashboard() {
   const [profile, setProfile] = useState([
@@ -38,9 +46,29 @@ export default function Dashboard() {
   const [dataLoading, setDataLoading] = useState(true);
   const [numberId, setNumberId] = useState();
 
+  const getProfiles = async () => {
+    const refer = collection(db, "users", userInfo.uid, "profiles");
+
+    const q = query(refer, limit(1));
+    const snap = await getDocs(refer);
+
+    if (snap.size <= 0) {
+      console.log("0 doc found");
+      return;
+    }
+    const snapshot = await getDocs(refer);
+    const data = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    // setProfile(data);
+    // console.log(profile);
+  };
+
   //preventing unauthorized access
   useEffect(() => {
-    console.log(userInfo)
+    console.log(userInfo);
+
     if (fireBaseloading) {
       return;
     }
@@ -69,12 +97,8 @@ export default function Dashboard() {
     };
 
     getData();
+    getProfiles();
   }, [userInfo, fireBaseloading, router]);
-
-  const getProfiles = () => {
-
-    setProfile();
-  };
 
   if (fireBaseloading /*|| dataLoading*/) {
     //insert loading

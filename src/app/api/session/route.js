@@ -1,6 +1,10 @@
 import "server-only";
 import { checkSessionCookie, createSession } from "@/lib/session";
 import { NextResponse } from "next/server";
+import { adminAuth } from "@/lib/firebase/admin";
+
+import { cookies } from "next/headers";
+
 export async function POST(request) {
   try {
     const { uid, IdToken } = await request.json();
@@ -10,28 +14,23 @@ export async function POST(request) {
         { status: 500 }
       );
     }
-    console.log(
-      `userID: ${uid} \n IdToken: ${IdToken}`
-    );
+    console.log(`userID: ${uid} \n IdToken: ${IdToken}`);
 
     // login process to firebase
     const cookie = createSession(IdToken);
+
     //Check cookie status
     if (!cookie) {
-        return NextResponse.json(
-        { error: "The cookie cannot be created"},
+      return NextResponse.json(
+        { error: "The cookie cannot be created" },
         { status: 500 }
       );
     }
 
-    
     return NextResponse.json(
-      {message: "cookie has been set successfully"},
-      {status: 200,}
+      { message: "cookie has been set successfully", authenticated: true },
+      { status: 200 }
     );
-
-
-
   } catch (e) {
     console.log("API ERROR " + e);
     return new Response("There is error at authenticating please try again", {
@@ -42,27 +41,26 @@ export async function POST(request) {
 
 export async function GET() {
   try {
-    const cookie = checkSessionCookie();
+    const cookie = await checkSessionCookie();
 
     if (cookie) {
-      return new Response(
-        JSON.stringify({
+      return new NextResponse.json(
+        {
           message: "Session sucessfully verified",
-          user: "DummyNickname",
-          uid: "a1231231",
-          email: "@mail.com",
+          uid: cookie.uid,
+          email:cookie.email,
           authenticated: true,
-        }),
+        },
         {
           status: 200,
-          headers: {
-            "Content-Type": "application/json",
-          },
         }
       );
     } else {
-      return new Response(
-        "There is error within cookie verification, please try again",
+      return new NextResponse.json(
+        {
+          message: "There is error within cookie verification, please try again",
+          authenticated: false,
+        },
         { status: 500 }
       );
     }

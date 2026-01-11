@@ -7,7 +7,8 @@ export const runtime = "nodejs";
 export async function checkSessionCookie() {
   try {
     // Whenever a user is accessing restricted content that requires authentication.
-    const sessionCookie = (await cookies().get("session")?.value) || "";
+    const cookie = await cookies()
+    const sessionCookie = cookie.get("session")?.value || "";
 
     if (!sessionCookie) {
       return null;
@@ -19,11 +20,9 @@ export async function checkSessionCookie() {
         sessionCookie,
         true
       );
-      const decodedClaims = await verifySession.decodedClaims;
-      console.log(verifySession);
-      console.log(decodedClaims);
-
-      return decodedClaims;
+      // const decodedClaims = verifySession.uid;
+      
+      return verifySession;
     } catch (err) {
       return null;
     }
@@ -35,6 +34,7 @@ export async function checkSessionCookie() {
 
 export async function createSession(userToken) {
   try {
+    console.log("AAAAAAA")
     const bakeCookies = await cookies();
     const token = userToken;
     //bakes cookie for login
