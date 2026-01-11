@@ -1,281 +1,33 @@
-{
-  avatar_url: 'https://a.ppy.sh/35064620?1703686587.jpeg',
-  country_code: 'CA',
-  default_group: 'default',
-  id: 35064620,
-  is_active: true,
-  is_bot: false,
-  is_deleted: false,
-  is_online: true,
-  is_supporter: false,
-  last_visit: '2026-01-08T22:37:19+00:00',
-  pm_friends_only: false,
-  profile_colour: null,
-  username: 'Knockout113',
-  cover_url: 'https://assets.ppy.sh/user-cover-presets/5/395c011121ca45b2ab30bd6fdd5d12483acca063bfb75ccae96d88da4304a1fb.jpeg',
-  discord: null,
-  has_supported: false,
-  interests: null,
-  join_date: '2023-12-27T09:30:46+00:00',
-  location: null,
-  max_blocks: 100,
-  max_friends: 500,
-  occupation: null,
-  playmode: 'osu',
-  playstyle: [ 'keyboard', 'tablet' ],
-  post_count: 0,
-  profile_hue: null,
-  profile_order: [
-    'me',
-    'recent_activity',
-    'top_ranks',
-    'medals',
-    'historical',
-    'beatmaps',
-    'kudosu'
-  ],
-  title: null,
-  title_url: null,
-  twitter: null,
-  website: null,
-  country: { code: 'CA', name: 'Canada' },
-  cover: {
-    custom_url: null,
-    url: 'https://assets.ppy.sh/user-cover-presets/5/395c011121ca45b2ab30bd6fdd5d12483acca063bfb75ccae96d88da4304a1fb.jpeg',
-    id: '5'
-  },
-  is_restricted: false,
-  kudosu: { available: 0, total: 0 },
-  account_history: [],
-  active_tournament_banner: null,
-  active_tournament_banners: [],
-  badges: [],
-  beatmap_playcounts_count: 2427,
-  comments_count: 0,
-  current_season_stats: null,
-  daily_challenge_user_stats: {
-    daily_streak_best: 0,
-    daily_streak_current: 0,
-    last_update: '2000-01-01T00:00:00+00:00',
-    last_weekly_streak: '2000-01-01T00:00:00+00:00',
-    playcount: 0,
-    top_10p_placements: 0,
-    top_50p_placements: 0,
-    user_id: 35064620,
-    weekly_streak_best: 0,
-    weekly_streak_current: 0
-  },
-  favourite_beatmapset_count: 5,
-  follower_count: 7,
-  graveyard_beatmapset_count: 0,
-  groups: [],
-  guest_beatmapset_count: 0,
-  loved_beatmapset_count: 0,
-  mapping_follower_count: 0,
-  matchmaking_stats: [],
-  monthly_playcounts: [
-    { start_date: '2023-12-01', count: 472 },
-    { start_date: '2024-01-01', count: 1936 },
-    { start_date: '2024-02-01', count: 1190 },
-    { start_date: '2024-03-01', count: 1294 },
-    { start_date: '2024-04-01', count: 837 },
-    { start_date: '2024-05-01', count: 1769 },
-    { start_date: '2024-06-01', count: 1740 },
-    { start_date: '2024-07-01', count: 2253 },
-    { start_date: '2024-08-01', count: 1363 },
-    { start_date: '2024-09-01', count: 1069 },
-    { start_date: '2024-10-01', count: 1121 },
-    { start_date: '2024-11-01', count: 1126 },
-    { start_date: '2024-12-01', count: 1109 },
-    { start_date: '2025-01-01', count: 1180 },
-    { start_date: '2025-02-01', count: 1074 },
-    { start_date: '2025-03-01', count: 1131 },
-    { start_date: '2025-04-01', count: 492 },
-    { start_date: '2025-05-01', count: 272 },
-    { start_date: '2025-06-01', count: 652 },
-    { start_date: '2025-07-01', count: 633 },
-    { start_date: '2025-08-01', count: 341 },
-    { start_date: '2025-09-01', count: 127 },
-    { start_date: '2025-10-01', count: 120 },
-    { start_date: '2025-11-01', count: 151 },
-    { start_date: '2025-12-01', count: 228 },
-    { start_date: '2026-01-01', count: 1 }
-  ],
-  nominated_beatmapset_count: 0,
-  page: { html: '', raw: '' },
-  pending_beatmapset_count: 0,
-  previous_usernames: [],
-  rank_highest: { rank: 225094, updated_at: '2025-03-12T00:39:06Z' },
-  ranked_beatmapset_count: 0,
-  replays_watched_counts: [ { start_date: '2024-08-01', count: 1 } ],
-  scores_best_count: 200,
-  scores_first_count: 0,
-  scores_pinned_count: 2,
-  scores_recent_count: 0,
-  session_verification_method: null,
-  session_verified: true,
-  statistics: {
-    count_100: 703978,
-    count_300: 4370042,
-    count_50: 66608,
-    count_miss: 237850,
-    level: { current: 98, progress: 52 },
-    global_rank: 244537,
-    global_rank_percent: 0.08793631569143447,
-    global_rank_exp: null,
-    pp: 3223.61,
-    pp_exp: 0,
-    ranked_score: 3044660762,
-    hit_accuracy: 97.103,
-    play_count: 23670,
-    play_time: 1486897,
-    total_score: 15230763284,
-    total_hits: 5140628,
-    maximum_combo: 1434,
-    replays_watched_by_others: 1,
-    is_ranked: true,
-    grade_counts: { ss: 4, ssh: 3, s: 68, sh: 4, a: 620 },
-    country_rank: 9966,
-    rank: { country: 9966 }
-  },
-  statistics_rulesets: {
-    osu: {
-      count_100: 703978,
-      count_300: 4370042,
-      count_50: 66608,
-      count_miss: 237850,
-      level: [Object],
-      global_rank: 244537,
-      global_rank_percent: 0.08793631569143447,
-      global_rank_exp: null,
-      pp: 3223.61,
-      pp_exp: 0,
-      ranked_score: 3044660762,
-      hit_accuracy: 97.103,
-      play_count: 23670,
-      play_time: 1486897,
-      total_score: 15230763284,
-      total_hits: 5140628,
-      maximum_combo: 1434,
-      replays_watched_by_others: 1,
-      is_ranked: true,
-      grade_counts: [Object]
-    },
-    fruits: {
-      count_100: 10,
-      count_300: 345,
-      count_50: 345,
-      count_miss: 48,
-      level: [Object],
-      global_rank: null,
-      global_rank_percent: null,
-      global_rank_exp: null,
-      pp: 0,
-      pp_exp: 0,
-      ranked_score: 0,
-      hit_accuracy: 0,
-      play_count: 3,
-      play_time: 111,
-      total_score: 268714,
-      total_hits: 700,
-      maximum_combo: 0,
-      replays_watched_by_others: 0,
-      is_ranked: false,
-      grade_counts: [Object]
-    },
-    mania: {
-      count_100: 1963,
-      count_300: 4084,
-      count_50: 91,
-      count_miss: 265,
-      level: [Object],
-      global_rank: null,
-      global_rank_percent: null,
-      global_rank_exp: null,
-      pp: 0,
-      pp_exp: 0,
-      ranked_score: 1227189,
-      hit_accuracy: 89.1259,
-      play_count: 7,
-      play_time: 668,
-      total_score: 1816312,
-      total_hits: 6138,
-      maximum_combo: 450,
-      replays_watched_by_others: 0,
-      is_ranked: false,
-      grade_counts: [Object]
-    }
-  },
-  support_level: 0,
-  team: null,
-  user_achievements: [
-    { achieved_at: '2025-04-26T06:25:16Z', achievement_id: 67 },
-    { achieved_at: '2024-11-03T05:45:22Z', achievement_id: 60 },
-    { achieved_at: '2024-10-31T22:50:38Z', achievement_id: 21 },
-    { achieved_at: '2024-10-25T08:01:35Z', achievement_id: 137 },
-    { achieved_at: '2024-10-19T21:15:18Z', achievement_id: 39 },
-    { achieved_at: '2024-09-21T20:56:23Z', achievement_id: 123 },
-    { achieved_at: '2024-07-26T03:48:21Z', achievement_id: 4 },
-    { achieved_at: '2024-07-12T20:28:09Z', achievement_id: 66 },
-    { achieved_at: '2024-05-12T21:39:12Z', achievement_id: 38 },
-    { achieved_at: '2024-05-10T19:11:16Z', achievement_id: 89 },
-    { achieved_at: '2024-05-10T19:11:16Z', achievement_id: 54 },
-    { achieved_at: '2024-05-04T21:45:35Z', achievement_id: 319 },
-    { achieved_at: '2024-04-03T23:44:22Z', achievement_id: 303 },
-    { achieved_at: '2024-04-03T19:10:52Z', achievement_id: 20 },
-    { achieved_at: '2024-03-20T03:14:39Z', achievement_id: 59 },
-    { achieved_at: '2024-01-29T09:23:56Z', achievement_id: 58 },
-    { achieved_at: '2024-01-22T10:44:49Z', achievement_id: 3 },
-    { achieved_at: '2024-01-21T13:09:30Z', achievement_id: 65 },
-    { achieved_at: '2024-01-19T11:09:55Z', achievement_id: 124 },
-    { achieved_at: '2024-01-17T11:34:40Z', achievement_id: 127 },
-    { achieved_at: '2024-01-01T06:47:10Z', achievement_id: 176 },
-    { achieved_at: '2023-12-30T10:45:34Z', achievement_id: 15 },
-    { achieved_at: '2023-12-30T06:45:02Z', achievement_id: 57 },
-    { achieved_at: '2023-12-29T09:21:15Z', achievement_id: 1 },
-    { achieved_at: '2023-12-27T15:06:59Z', achievement_id: 122 },
-    { achieved_at: '2023-12-27T14:37:15Z', achievement_id: 64 },
-    { achieved_at: '2023-12-27T14:24:44Z', achievement_id: 121 },
-    { achieved_at: '2023-12-27T11:59:52Z', achievement_id: 56 },
-    { achieved_at: '2023-12-27T10:15:14Z', achievement_id: 63 },
-    { achieved_at: '2023-12-27T10:15:14Z', achievement_id: 55 }
-  ],
-  rank_history: {
-    mode: 'osu',
-    data: [
-      246230, 246360, 246141, 246258, 246339, 246462, 246560,
-      246671, 246778, 246916, 247028, 247135, 247232, 247350,
-      247471, 247589, 247710, 247828, 247917, 248032, 248138,
-      248240, 248329, 248445, 248577, 248693, 248787, 248903,
-      234679, 234924, 235550, 235722, 235887, 236089, 236277,
-      236495, 236694, 236887, 237021, 237176, 237335, 237509,
-      237710, 237908, 238095, 238262, 238437, 238606, 238782,
-      239010, 239209, 239387, 239571, 239713, 239878, 240079,
-      240308, 240495, 240687, 240853, 240106, 240266, 240234,
-      240427, 240610, 240774, 240940, 241114, 241306, 241483,
-      241662, 241840, 241990, 242177, 242339, 242527, 242686,
-      242846, 243003, 243166, 243358, 243500, 243615, 243765,
-      243935, 244088, 244237, 244380, 244537, 244537
-    ]
-  },
-  rankHistory: {
-    mode: 'osu',
-    data: [
-      246230, 246360, 246141, 246258, 246339, 246462, 246560,
-      246671, 246778, 246916, 247028, 247135, 247232, 247350,
-      247471, 247589, 247710, 247828, 247917, 248032, 248138,
-      248240, 248329, 248445, 248577, 248693, 248787, 248903,
-      234679, 234924, 235550, 235722, 235887, 236089, 236277,
-      236495, 236694, 236887, 237021, 237176, 237335, 237509,
-      237710, 237908, 238095, 238262, 238437, 238606, 238782,
-      239010, 239209, 239387, 239571, 239713, 239878, 240079,
-      240308, 240495, 240687, 240853, 240106, 240266, 240234,
-      240427, 240610, 240774, 240940, 241114, 241306, 241483,
-      241662, 241840, 241990, 242177, 242339, 242527, 242686,
-      242846, 243003, 243166, 243358, 243500, 243615, 243765,
-      243935, 244088, 244237, 244380, 244537, 244537
-    ]
-  },
-  ranked_and_approved_beatmapset_count: 0,
-  unranked_beatmapset_count: 0
-}
+"use client";
+
+import { createContext, useContext, useEffect, useState } from "react";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import {auth} from "@/lib/firebase/firebase.config"
+const AuthContext = createContext();
+
+export const AuthProvider = ({ children }) => {
+  const [userInfo, setUser] = useState(null);
+  const [fireBaseloading, setLoading] = useState(true);
+
+  useEffect(() => {
+    console.log("Checking authorization");
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      setUser(firebaseUser || null);
+      setLoading(false);
+    }); 
+
+    return () => unsubscribe();
+  }, []);
+
+  const logOut = async() => {
+    await signOut(auth);
+  } 
+ 
+  return (
+    <AuthContext.Provider value={{ userInfo, fireBaseloading, logOut}}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export const firebaseAuth = () => useContext(AuthContext);
