@@ -14,6 +14,7 @@
     "@radix-ui/react-label": "^2.1.8",
     "@radix-ui/react-navigation-menu": "^1.2.14",
     "@radix-ui/react-portal": "^1.1.10",
+    "@radix-ui/react-progress": "^1.1.8",
     "@radix-ui/react-scroll-area": "^1.2.10",
     "@radix-ui/react-separator": "^1.1.8",
     "@radix-ui/react-slot": "^1.2.4",
@@ -27,6 +28,7 @@
     "next": "^16.1.1",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
+    "recharts": "^3.6.0",
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {

@@ -4,13 +4,14 @@ import { doc, getDoc } from "firebase/firestore";
 import { useParams,useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import {firebaseAuth} from "@/lib/AuthContext"
+import OsuProfile from "@/components/ai-gen/osuprofile";
 
 export default function profilePage() {
     const { game } = useParams();
     const router = useRouter();
     const { userInfo, fireBaseloading, logOut } = firebaseAuth();
     const [profile, setProfile] = useState();
-
+    const [loading, setLoading] = useState(true);
 
 
     useEffect(() => {
@@ -35,6 +36,7 @@ export default function profilePage() {
 
                 const data = snapshot.data();
                 console.log(data);
+                setProfile(data);
             } catch (err) {
                 console.error(err);
             } finally {
@@ -54,14 +56,15 @@ export default function profilePage() {
 
 
     return (
-        <div className="p-6 space-y-4">
-            <h1 className="text-2xl font-bold capitalize">{game} Profile</h1>
+        // <div className="p-6 space-y-4">
+        //     <h1 className="text-2xl font-bold capitalize">{game} Profile</h1>
 
-            <div className="rounded-lg border p-4">
-                <p><strong>Username:</strong> {profile.username}</p>
-                <p><strong>ID:</strong> {profile.id}</p>
-                {profile.rank && <p><strong>Rank:</strong> {profile.rank}</p>}
-            </div>
-        </div>
+        //     <div className="rounded-lg border p-4">
+        //         <p><strong>Username:</strong> {profile.username}</p>
+        //         <p><strong>ID:</strong> {profile.id}</p>
+        //         {profile.rank && <p><strong>Rank:</strong> {profile.rank}</p>}
+        //     </div>
+        // </div>
+        <OsuProfile profileData={profile}/>
     );
 };

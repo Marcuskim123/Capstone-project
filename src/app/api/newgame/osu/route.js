@@ -95,7 +95,7 @@ export async function GET(req) {
     }
     // Redirect back to frontend
     return NextResponse.redirect(
-      new URL("/dashboard", "http://localhost:3000")
+      new URL("/dashboard", process.env.NEXT_PUBLIC_BASE_URL)
     );
 
   } catch (err) {
@@ -104,6 +104,6 @@ export async function GET(req) {
     return NextResponse.json(
       { error: "OAuth callback failed" },
       { status: 500 }
-    ).redirect("/dashboard",req.url);
+    ).redirect("/dashboard",process.env.NEXT_PUBLIC_BASE_URL);
   }
 }

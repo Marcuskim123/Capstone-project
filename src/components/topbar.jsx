@@ -16,7 +16,7 @@ export default function Topbar() {
       <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
       <Input
         className="pl-8 w-full"
-        placeholder="Search players or maps"
+        placeholder="Search players"
       />
     </div>
   </div>
