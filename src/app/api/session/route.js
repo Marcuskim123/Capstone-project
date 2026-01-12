@@ -14,13 +14,24 @@ export async function POST(request) {
         { status: 500 }
       );
     }
-    console.log(`userID: ${uid} \n IdToken: ${IdToken}`);
 
-    // login process to firebase
-    const cookie = createSession(IdToken);
+    // const sessionCookie = createSession(IdToken);
 
-    //Check cookie status
-    if (!cookie) {
+    const bakeCookies = await cookies();
+    //bakes cookie for login
+    const expiresIn = 60 * 60 * 24 * 5 * 1000;
+    const sessionCookie = await adminAuth.createSessionCookie(IdToken, {
+      expiresIn: expiresIn,
+    });
+    bakeCookies.set("session", sessionCookie, {
+      maxAge: expiresIn / 1000, // seconds (Next.js expects seconds)
+      httpOnly: true,
+      secure: true,
+    });
+
+    console.log(`userID: ${uid} \n IdToken: ${IdToken}\n\n\n CookieJWT:\n ${sessionCookie}`);
+
+    if (!sessionCookie) {
       return NextResponse.json(
         { error: "The cookie cannot be created" },
         { status: 500 }
@@ -31,6 +42,7 @@ export async function POST(request) {
       { message: "cookie has been set successfully", authenticated: true },
       { status: 200 }
     );
+
   } catch (e) {
     console.log("API ERROR " + e);
     return new Response("There is error at authenticating please try again", {
@@ -39,12 +51,14 @@ export async function POST(request) {
   }
 }
 
+
+// Get cookie and checks
 export async function GET() {
   try {
     const cookie = await checkSessionCookie();
 
     if (cookie) {
-      return new NextResponse.json(
+      return NextResponse.json(
         {
           message: "Session sucessfully verified",
           uid: cookie.uid,
@@ -55,8 +69,9 @@ export async function GET() {
           status: 200,
         }
       );
-    } else {
-      return new NextResponse.json(
+    } 
+    else {
+      return NextResponse.json(
         {
           message: "There is error within cookie verification, please try again",
           authenticated: false,
@@ -65,9 +80,16 @@ export async function GET() {
       );
     }
   } catch (err) {
-    console.log("API ERROR /LOGIN GET", +err);
-    return new Response("There is error at authenticating your cookie", {
-      status: 500,
-    });
+    
+    console.log("API ERROR /LOGIN GET " + err);
+      return NextResponse.json(
+        {
+          message: "There is error within cookie verification, please try again",
+          authenticated: false,
+        },
+        {
+          status: 200,
+        }
+      );
   }
 }

@@ -24,10 +24,10 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Topbar />
-        <AuthProvider>
+        {/* <Topbar /> */}
+        {/* <AuthProvider> */}
           <main>{children}</main>
-        </AuthProvider>
+        {/* </AuthProvider> */}
       </body>
     </html>
   );

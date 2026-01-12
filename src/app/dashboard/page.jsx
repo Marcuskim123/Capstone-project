@@ -17,57 +17,30 @@ import {
 } from "firebase/firestore";
 import { firebaseAuth } from "@/lib/AuthContext";
 import { useRouter } from "next/navigation";
-import { AddGameProfileDialog } from "@/components/ai-gen/createnew";
 
 export default function Dashboard() {
-  const [profile, setProfile] = useState([
-    // {
-    //   id: 1,
-    //   title: "profile #1",
-    //   date: "2025-11-27",
-    //   description: "My first profile here:"
-    // },
-    // {
-    //   id: 2,
-    //   title: "profile #2",
-    //   date: "2025-11-27",
-    //   description: "My first profile here:"
-    // },
-    // {
-    //   id: 3,
-    //   title: "profile #3",
-    //   date: "2025-11-27",
-    //   description: "My first profile here:"
-    // },
-  ]);
+  const [profile, setProfile] = useState([]);
   const router = useRouter();
   const { userInfo, fireBaseloading, logOut } = firebaseAuth();
-  const [currentUser, setCurrentUser] = useState(null);
-  const [dataLoading, setDataLoading] = useState(true);
-  const [numberId, setNumberId] = useState();
+  const [loading, setLoading] = useState(false);
 
-  const getProfiles = async () => {
-    const refer = collection(db, "users", userInfo.uid, "profiles");
+  // const getProfiles = async () => {
+  // //   const refer = collection(db, "users", userInfo.uid, "profiles");
+  // //   const snap = await getDocs(refer);
 
-    const q = query(refer, limit(1));
-    const snap = await getDocs(refer);
+  // // const docsArray = snap.docs.map((doc) => ({
+  // //   id: doc.id,
+  // //   ...doc.data().profile,
+  // // }));
+  //   const refer = collection(db, "users", userInfo.uid);
+  //   const snap = await getDocs(refer);
 
-    if (snap.size <= 0) {
-      console.log("0 doc found");
-      return;
-    }
-    const snapshot = await getDocs(refer);
-    const data = snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-    // setProfile(data);
-    // console.log(profile);
-  };
+  // setProfile(docsArray);
+  // setLoading(false);
+  // };
 
   //preventing unauthorized access
   useEffect(() => {
-    console.log(userInfo);
 
     if (fireBaseloading) {
       return;
@@ -81,13 +54,14 @@ export default function Dashboard() {
     const getData = async () => {
       try {
         const refer = doc(db, "users", userInfo.uid);
-        // const refer = collection(db,'users');
         const snap = await getDoc(refer);
         if (snap.exists()) {
           const data = snap.data();
-
-          setNumberId(data.uid);
-          console.log();
+          console.log(data)
+          // setNumberId(data.uid);
+          const providersArray = [...(data.providers || [])];
+          console.log(providersArray)
+          setProfile(providersArray);
         } else {
           console.log("aaaa");
         }
@@ -97,11 +71,10 @@ export default function Dashboard() {
     };
 
     getData();
-    getProfiles();
+    // getProfiles();
   }, [userInfo, fireBaseloading, router]);
 
-  if (fireBaseloading /*|| dataLoading*/) {
-    //insert loading
+  if (fireBaseloading && loading) {
     return <h1>LOADING...</h1>;
   }
 
@@ -114,10 +87,11 @@ export default function Dashboard() {
         <main className="w-full flex flex-col">
           <SidebarTrigger>Open</SidebarTrigger>
           {profile.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 w-full h-full">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 w-full h-full">
               {profile.map((profiles) => (
-                <Profilecard key={profiles.id} profile={profiles} />
+                <Profilecard key={profiles.game} profile={profiles} />
               ))}
+              {/* <pre>{JSON.stringify(profile, null, 2)}</pre> */}
             </div>
           ) : (
             <div>

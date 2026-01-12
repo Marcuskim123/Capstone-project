@@ -1,5 +1,6 @@
 import { AuthProvider } from "@/lib/AuthContext";
 import { Geist, Geist_Mono } from "next/font/google";
+import Topbar from "@/components/topbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,8 +13,11 @@ const geistMono = Geist_Mono({
 
 export default function RootLayout({ children }) {
   return (
-        // <AuthProvider>
+    <div>
+      <Topbar></Topbar>
+        <AuthProvider>
           <main>{children}</main>
-        // </AuthProvider> 
+        </AuthProvider>
+    </div> 
   );
 }

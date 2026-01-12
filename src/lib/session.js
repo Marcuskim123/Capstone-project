@@ -10,22 +10,21 @@ export async function checkSessionCookie() {
     const cookie = await cookies()
     const sessionCookie = cookie.get("session")?.value || "";
 
+
     if (!sessionCookie) {
       return null;
     }
     // Verify the session cookie. In this case an additional check is added to detect
     // if the user's Firebase session was revoked, user deleted/disabled, etc.
-    try {
+
       const verifySession = await adminAuth.verifySessionCookie(
         sessionCookie,
         true
       );
-      // const decodedClaims = verifySession.uid;
-      
+
+      console.log("AAAAAAAAAAAAAA " + verifySession);
       return verifySession;
-    } catch (err) {
-      return null;
-    }
+      
   } catch (e) {
     console.log("SESSION ERROR/NOT FOUND: ", e);
     return null;
@@ -34,7 +33,8 @@ export async function checkSessionCookie() {
 
 export async function createSession(userToken) {
   try {
-    console.log("AAAAAAA")
+
+    console.log("Session coookie");
     const bakeCookies = await cookies();
     const token = userToken;
     //bakes cookie for login

@@ -1,11 +1,13 @@
 import "server-only";
-import {db} from "@/lib/firebase/admin"
+import {db, arrayUnion} from "@/lib/firebase/admin"
+const admin = require("firebase-admin");
+
 
 export const runtime = "nodejs";
 
 
 //Osu
-export async function addOsuData(osuProfile,uid) {
+export async function addOsuData(osuProfile, uid) {
     try {
   //   const profile = {
   //   id: osuProfile.id,
@@ -23,22 +25,26 @@ export async function addOsuData(osuProfile,uid) {
   //   },
   //   lastSyncedAt: new Date(),
   // };
+  
   const profile = osuProfile
 
 
   const provider = {
     game:"osu",
-    id:osuProfile.id,
-    username:osuProfile.username,
+    id:profile.id,
+    username:profile.username,
+    rank:profile.statistics_rulesets.osu.global_rank,
+    avatar_url:profile.avatar_url,
     addedAt: new Date()
   }
 
+  console.log(provider);
   const userID = uid;
 
   const add = db.collection('users').doc(userID)
   const setProvider = await add.set(
     {
-      providers:provider
+      providers: admin.firestore.FieldValue.arrayUnion(provider)
     },
     {
       merge:true
@@ -53,7 +59,8 @@ export async function addOsuData(osuProfile,uid) {
       merge:true
     });
 
-    console.log("user has been added to firebase");
+    console.log("user has been added to firebase \n\n");
+    return true;
 }
 catch(e){
     console.log(`ERROR WHILE SAVING OSU DATA: \n${e}`);

@@ -69,24 +69,33 @@ export async function GET(req) {
     });
 
     const osuUser = await userRes.json();
-    console.log(osuUser);
+    // console.log(osuUser);
     // TODO: save user + token in DB / session / JWT
 
 
     //check usersession in admin sdk
     const user = await checkSessionCookie()
+    console.log(user);
 
-    // if (!user) {
-    //   const response = NextResponse.next();
-    //   return NextResponse.redirect(
-    //     new URL("/dashboard",req.url)
-    //   );
-    // }
-    // const saveData = db.collection('users').doc(userId).collection('profile');
-    addOsuData(osuUser,user.uid);
+    if (!user) {
+      const response = NextResponse.next();
+      return NextResponse.redirect(
+        new URL("/login")
+      );
+      
+    }
+
+    const checkupload = await addOsuData(osuUser, user.uid);
+
+    if (!checkupload) {
+      return NextResponse.json(
+      { error: "OAuth callback failed" },
+      { status: 500 }
+    );
+    }
     // Redirect back to frontend
     return NextResponse.redirect(
-      new URL("/dashboard", req.url)
+      new URL("/dashboard", "http://localhost:3000")
     );
 
   } catch (err) {
@@ -95,6 +104,6 @@ export async function GET(req) {
     return NextResponse.json(
       { error: "OAuth callback failed" },
       { status: 500 }
-    );
+    ).redirect("/dashboard",req.url);
   }
 }

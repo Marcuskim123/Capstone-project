@@ -40,7 +40,7 @@ export default function LoginWithEmail() {
   const [confirmation, setConfimration] = useState(false);
   const [OTP, setOTP] = useState(false);
   const [cookieInfo, setCookieInfo] = useState({});
-  const {user, fireBaseloading, logOut} = firebaseAuth();
+  // const {user, fireBaseloading, logOut} = firebaseAuth();
   const router = useRouter();
 
   const sendLogin = async (e) => {
@@ -135,7 +135,7 @@ export default function LoginWithEmail() {
             </CardFooter>
           </form>
         </Card>
-        {confirmation && (
+        {/* {confirmation && (
           <div>
             <form onSubmit={checkOTP}>
               <DialogContent>
@@ -156,15 +156,15 @@ export default function LoginWithEmail() {
                     <InputOTPSlot index={5}></InputOTPSlot>
                   </InputOTPGroup>
                 </InputOTP>
-                <DialogFooter>
+                <DialogFooter> */}
                   {/* <DialogClose asChild> */}
-                  <Button type="Sumbit">Confirm</Button>
+                  {/* <Button type="Sumbit">Confirm</Button> */}
                   {/* </DialogClose> */}
-                </DialogFooter>
+                {/* </DialogFooter>
               </DialogContent>
             </form>
           </div>
-        )}
+        )} */}
       </Dialog>
     </div>
   );
