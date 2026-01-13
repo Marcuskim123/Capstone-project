@@ -22,7 +22,7 @@ export async function checkSessionCookie() {
         true
       );
 
-      console.log("AAAAAAAAAAAAAA " + verifySession);
+      console.log(verifySession);
       return verifySession;
       
   } catch (e) {

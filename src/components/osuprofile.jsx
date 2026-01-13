@@ -172,7 +172,7 @@ export default function OsuProfile({ profileData }) {
               <div className="flex justify-between" key={profiles.id}>
                 <div>
                   <p className="text-lg font-bold">{profiles.beatmapset.title}</p>
-                  <p className="text-sm text-muted-foreground">{profiles.beatmapset.artist} · { }★</p>
+                  <p className="text-sm text-muted-foreground">{profiles.beatmapset.artist} · {profiles.beatmap.difficulty_rating.toFixed(2)}★</p>
                   {profiles.mods.length > 0 ? (
                     <div className="flex gap-2 mt-1">
                       {profiles.mods.map((mod) => (

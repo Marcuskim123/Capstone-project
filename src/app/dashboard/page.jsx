@@ -31,6 +31,7 @@ export default function Dashboard() {
     }
 
     if (!userInfo) {
+      setProfile([]);
       router.push("/login");
       return;
     }
@@ -53,13 +54,16 @@ export default function Dashboard() {
         console.log(e);
       }
     };
-
-    getData();
-    // getProfiles();
+    if(userInfo){
+      getData();
+    }
   }, [userInfo, fireBaseloading, router]);
 
   if (fireBaseloading && loading) {
     return <h1>LOADING...</h1>;
+  }
+  if (!userInfo) {
+    return;
   }
 
   return (

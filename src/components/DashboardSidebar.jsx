@@ -14,6 +14,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { title } from "node:process";
 
 export function DashboardSidebar() {
   const menuItem = [
@@ -26,9 +27,13 @@ export function DashboardSidebar() {
       link: "/dashboard" 
     },
     { 
-      title: "Search", 
-      link: "/search" 
+      title: "Login", 
+      link: "/login" 
     },
+    {
+      title:"Sign up",
+      link:"/"
+    }
   ];
 
   return (

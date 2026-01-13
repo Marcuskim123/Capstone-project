@@ -40,7 +40,7 @@ export async function GET(req) {
         code,
         grant_type: "authorization_code",
         redirect_uri:
-          "http://localhost:3000/api/newgame/osu",
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/newgame/osu`,
       }),
     });
 
@@ -87,7 +87,7 @@ export async function GET(req) {
       },
     });
     const topScore = await bestScores.json();
-    console.log(topScore);
+    // console.log(topScore);
 
     //check usersession in admin sdk
     const user = await checkSessionCookie()
