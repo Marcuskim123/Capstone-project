@@ -29,10 +29,6 @@ export function DashboardSidebar() {
       title: "Search", 
       link: "/search" 
     },
-    { 
-      title: "Setting", 
-      link: "/setting" 
-    },
   ];
 
   return (

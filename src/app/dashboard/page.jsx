@@ -24,22 +24,6 @@ export default function Dashboard() {
   const { userInfo, fireBaseloading, logOut } = firebaseAuth();
   const [loading, setLoading] = useState(false);
 
-  // const getProfiles = async () => {
-  // //   const refer = collection(db, "users", userInfo.uid, "profiles");
-  // //   const snap = await getDocs(refer);
-
-  // // const docsArray = snap.docs.map((doc) => ({
-  // //   id: doc.id,
-  // //   ...doc.data().profile,
-  // // }));
-  //   const refer = collection(db, "users", userInfo.uid);
-  //   const snap = await getDocs(refer);
-
-  // setProfile(docsArray);
-  // setLoading(false);
-  // };
-
-  //preventing unauthorized access
   useEffect(() => {
 
     if (fireBaseloading) {
@@ -87,9 +71,9 @@ export default function Dashboard() {
         <main className="w-full flex flex-col">
           <SidebarTrigger>Open</SidebarTrigger>
           {profile.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 w-full h-full">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 w-full h-full">
               {profile.map((profiles) => (
-                <Profilecard key={profiles.game} profile={profiles} />
+                <Profilecard key={profiles.game} profile={profiles} uid={userInfo.uid}/>
               ))}
               {/* <pre>{JSON.stringify(profile, null, 2)}</pre> */}
             </div>
