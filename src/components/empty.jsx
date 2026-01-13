@@ -29,7 +29,7 @@ const newGame = async () => {
     //required url for the
     const params = {
       client_id: process.env.NEXT_PUBLIC_API_OSU_CLIENT_ID,
-      redirect_uri: `${NEXT_PUBLIC_BASE_URL}/api/newgame/osu`,
+      redirect_uri: `${process.env.NEXT_PUBLIC_BASE_URL}/api/newgame/osu`,
       response_type: "code",
       scope: "public identify",
       state: "randomval",
