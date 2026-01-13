@@ -15,9 +15,9 @@ export default function RootLayout({ children }) {
   return (
     <div>
       <Topbar></Topbar>
-        <AuthProvider>
+        {/* <AuthProvider> */}
           <main>{children}</main>
-        </AuthProvider>
+        {/* </AuthProvider> */}
     </div> 
   );
 }

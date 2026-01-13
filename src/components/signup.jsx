@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import {
   Field,
   FieldDescription,
@@ -9,83 +9,158 @@ import {
   FieldSet,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import {Checkbox} from "@/components/ui/checkbox";
-import {useState} from "react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
-
+import { auth,db } from "@/lib/firebase/firebase.config";
+import {
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
+import { useRouter } from "next/navigation";
+import { getDoc, doc,setDoc } from "firebase/firestore"
 
 export default function Signup() {
+  const router = useRouter();
+  const [ToS, setToS] = useState(false);
 
-    const [confirmPassword, setConfirmPassword] = useState("");
-    const [ToS, setToS] = useState(false);
-    const [userInfo, setUserInfo] = useState({
-        email:"",
-        username:"",
-        password:"",
-    });
-    const [checkUsername, setCheckUsername] = useState("");
+  const sendSignUp = async (e) => {
+    try {
+      e.preventDefault();
+      const handleForm = new FormData(e.target);
+      const email = handleForm.get("email");
+      const password = handleForm.get("password");
+      const confirmPassword = handleForm.get("confirmPassword");
+      const username = handleForm.get("username");
 
+      if (confirmPassword !== password) {
+        console.log(password + "   " + confirmPassword);
+        console.log("password do not match");
+        return;
+      }
 
-    const sendSignUp = async (e) => {
-        e.preventDefault();
-        const handleForm = new FormData(e.target);
-        setUserInfo.password(handleForm.get('password'));
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      console.log(userCredential);
 
-        try {
-            console.log(Tos);
-        }
-        catch(err) {
-            console.log(err);
-        }
-    };
+    const ref = doc(db, "users", userCredential.user.uid);
+    const snap = await getDoc(ref);
 
-    const checkPassword = async (event) => {
-        if (event.target.value == userInfo.password) {
-            setConfirmPassword("Password is correct");
-        }
-        else{
-            setConfirmPassword("Password is does not match")
-        }
-        
+    if (!snap.exists()) {
+      await setDoc(ref, {
+      email: userCredential.user.email,
+      username: username,
+      createdAt: Date.now(),
+      providers: [],
+    })}
+    router.push("/login");
+    } catch (err) {
+      console.log(err);
     }
+}
 
+  // const checkPassword = async (event) => {
+  //   if (event.target.value == userInfo.password) {
+  //     setConfirmPassword("Password is correct");
+  //   } else {
+  //     setConfirmPassword("Password is does not match");
+  //   }
+  // };
 
   return (
-    <div className="w-full grid">
-      <form onSubmit={sendSignUp}>
-        <FieldGroup className="flex w-full justified-center text-left">
-          <FieldSet>
-            <FieldLegend>Account Signup</FieldLegend>
-            <FieldDescription>Create your for free to continue using our service</FieldDescription>
-            <FieldGroup className="max-w-lg">
+    <div className="min-h-screen flex items-center justify-center bg-muted/40 px-4">
+      <form onSubmit={sendSignUp} className="w-full max-w-lg">
+        <FieldGroup className="flex justify-center text-left">
+          <FieldSet className="w-full rounded-xl border-2 border-black bg-background p-6 shadow-sm space-y-6">
+            {/* Header */}
+            <div className="space-y-1">
+              <FieldLegend className="text-2xl font-semibold">
+                Account Signup
+              </FieldLegend>
+              <FieldDescription className="text-sm text-muted-foreground">
+                Create your account for free to continue using our service
+              </FieldDescription>
+            </div>
+
+            {/* Form Fields */}
+            <FieldGroup className="space-y-4">
               <Field>
                 <FieldLabel>Email</FieldLabel>
-                <Input name="email" type="email" placeholder="Example@email.com" required />
+                <Input
+                  name="email"
+                  type="email"
+                  placeholder="example@email.com"
+                  required
+                />
               </Field>
+
               <Field>
                 <FieldLabel>Username</FieldLabel>
-                <Input type="text" placeholder="ex. KnockKnock11" required />
-                <FieldDescription>{checkUsername}</FieldDescription>
+                <Input
+                  name="username"
+                  type="text"
+                  placeholder="KnockKnock11"
+                  required
+                />
+                <FieldDescription></FieldDescription>
               </Field>
+
               <Field>
                 <FieldLabel>Password</FieldLabel>
-                <Input name="password" type="password" placeholder="•••••••" required/>
-                <FieldDescription>Password must be atleast 8 letters long</FieldDescription>
+                <Input
+                  name="password"
+                  type="password"
+                  placeholder="••••••••"
+                  required
+                />
+                <FieldDescription>
+                  Password must be at least 8 characters long
+                </FieldDescription>
+              </Field>
+
+              <Field>
                 <FieldLabel>Confirm Password</FieldLabel>
-                <Input type="password" placeholder="•••••••" required onChange={checkPassword}/>
-                <FieldDescription>{}</FieldDescription>
+                <Input
+                  type="password"
+                  placeholder="••••••••"
+                  required
+                  name="confirmPassword"
+                />
+                <FieldDescription>
+                  {/* password match message */}
+                </FieldDescription>
               </Field>
             </FieldGroup>
-            <FieldSeparator></FieldSeparator>
-            <FieldGroup className="flex flex-col gap-6">
-                <FieldLabel>Terms of Service</FieldLabel>
-                <Field orientation="horizontal" className="flex items-center gap-3">
-                    <Checkbox required id="terms" onChange={(e) => setToS(e.target.value)}/>
-                    <FieldLabel>I agree to terms of service</FieldLabel>
+
+            <FieldSeparator />
+
+            {/* Terms & Submit */}
+            <FieldGroup className="space-y-6">
+              <Field>
+                <FieldLabel className="text-sm font-medium">
+                  Terms of Service
+                </FieldLabel>
+
+                <Field
+                  orientation="horizontal"
+                  className="flex items-center gap-3"
+                >
+                  <Checkbox
+                    id="terms"
+                    required
+                    onCheckedChange={(checked) => setToS(checked)}
+                  />
+                  <FieldLabel htmlFor="terms" className="text-sm">
+                    I agree to the Terms of Service
+                  </FieldLabel>
                 </Field>
-                <Field>
-                    <Button type="submit">Sumbit</Button>
-                </Field>
+              </Field>
+
+              <Button type="submit" className="w-full">
+                Sign Up
+              </Button>
             </FieldGroup>
           </FieldSet>
         </FieldGroup>
