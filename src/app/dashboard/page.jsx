@@ -68,12 +68,12 @@ export default function Dashboard() {
 
   return (
     <div className="flex">
-      <SidebarProvider>
+      {/* <SidebarProvider>
         <div>
           <DashboardSidebar></DashboardSidebar>
-        </div>
-        <main className="w-full flex flex-col">
-          <SidebarTrigger>Open</SidebarTrigger>
+        </div> */}
+        <main className="w-full flex flex-col p-10">
+          {/* <SidebarTrigger>Open</SidebarTrigger> */}
           {profile.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 w-full h-full">
               {profile.map((profiles) => (
@@ -87,7 +87,7 @@ export default function Dashboard() {
             </div>
           )}
         </main>
-      </SidebarProvider>
+      {/* </SidebarProvider> */}
     </div>
   );
 }
